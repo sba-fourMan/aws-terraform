@@ -42,6 +42,28 @@ resource "aws_lambda_function" "auction" {
   }
 }
 
+resource "aws_lambda_function" "receipt" {
+  filename         = "${path.module}/function/CI.zip"
+  function_name    = "${var.branch}-receipt"
+  role             = var.lambda_role
+  handler          = var.handler
+  runtime          = var.runtime
+  layers           = [data.aws_lambda_layer_version.python_requests_layer.arn]
+
+  vpc_config {
+    security_group_ids = [data.aws_security_group.lambda.id]
+    subnet_ids = [data.aws_subnet.private_subnet.id]
+  }
+
+  environment {
+    variables = {
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-receipt/build?token=receipt"
+      JENKINS_TOKEN = var.JENKINS_TOKEN
+      JENKINS_USER = var.JENKINS_USER
+    }
+  }
+}
+
 resource "aws_lambda_function" "apiGateway" {
   filename         = "${path.module}/function/CI.zip"
   function_name    = "${var.branch}-apiGateway"
@@ -102,28 +124,6 @@ resource "aws_lambda_function" "config" {
   environment {
     variables = {
       JENKINS_URL = "${var.JENKINS_URL}${var.branch}-config/build?token=config"
-      JENKINS_TOKEN = var.JENKINS_TOKEN
-      JENKINS_USER = var.JENKINS_USER
-    }
-  }
-}
-
-resource "aws_lambda_function" "receipt" {
-  filename         = "${path.module}/function/CI.zip"
-  function_name    = "${var.branch}-receipt"
-  role             = var.lambda_role
-  handler          = var.handler
-  runtime          = var.runtime
-  layers           = [data.aws_lambda_layer_version.python_requests_layer.arn]
-
-  vpc_config {
-    security_group_ids = [data.aws_security_group.lambda.id]
-    subnet_ids = [data.aws_subnet.private_subnet.id]
-  }
-
-  environment {
-    variables = {
-      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-receipt/build?token=receipt"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
