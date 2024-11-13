@@ -14,10 +14,12 @@ provider "aws" {
 
 locals {
   branch = "dev"
+  up_branch = "Dev"
 }
 
 module "lambda" {
   source = "../modules/lambda"
   JENKINS_TOKEN = var.JENKINS_TOKEN
   branch = local.branch
+  up_branch = local.up_branch
 }

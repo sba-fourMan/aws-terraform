@@ -1,6 +1,6 @@
 resource "aws_lambda_function" "dev-auction-service" {
   filename         = "${path.module}/function/Dev-CI.zip"
-  function_name    = "Dev-auction"
+  function_name    = "${var.up_branch}-auction"
   role             = var.lambda_role
   handler          = var.handler
   runtime          = var.runtime
@@ -22,7 +22,7 @@ resource "aws_lambda_function" "dev-auction-service" {
 
 resource "aws_lambda_function" "dev-apiGateway" {
   filename         = "${path.module}/function/Dev-CI.zip"
-  function_name    = "Dev-apiGateway"
+  function_name    = "${var.up_branch}-apiGateway"
   role             = var.lambda_role
   handler          = var.handler
   runtime          = var.runtime
@@ -44,7 +44,7 @@ resource "aws_lambda_function" "dev-apiGateway" {
 
 resource "aws_lambda_function" "dev-cert" {
   filename         = "${path.module}/function/Dev-CI.zip"
-  function_name    = "Dev-cert"
+  function_name    = "${var.up_branch}-cert"
   role             = var.lambda_role
   handler          = var.handler
   runtime          = var.runtime
@@ -66,7 +66,7 @@ resource "aws_lambda_function" "dev-cert" {
 
 resource "aws_lambda_function" "dev-config" {
   filename         = "${path.module}/function/Dev-CI.zip"
-  function_name    = "Dev-config"
+  function_name    = "${var.up_branch}-config"
   role             = var.lambda_role
   handler          = var.handler
   runtime          = var.runtime
@@ -88,7 +88,7 @@ resource "aws_lambda_function" "dev-config" {
 
 resource "aws_lambda_function" "dev-receipt" {
   filename         = "${path.module}/function/Dev-CI.zip"
-  function_name    = "Dev-receipt"
+  function_name    = "${var.up_branch}-receipt"
   role             = var.lambda_role
   handler          = var.handler
   runtime          = var.runtime

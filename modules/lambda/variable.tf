@@ -26,3 +26,4 @@ variable "JENKINS_URL" {
 }
 
 variable "branch" {}
+variable "up_branch" {}
