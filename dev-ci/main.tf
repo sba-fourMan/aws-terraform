@@ -12,7 +12,12 @@ provider "aws" {
   secret_key = var.secret_key
 }
 
+locals {
+  branch = "dev"
+}
+
 module "lambda" {
   source = "../modules/lambda"
   JENKINS_TOKEN = var.JENKINS_TOKEN
+  branch = local.branch
 }
