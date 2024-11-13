@@ -22,5 +22,7 @@ variable "JENKINS_USER" {
 
 variable "JENKINS_URL" {
   type = string
-  default = "http://192.168.56.165:8080/job"
+  default = "http://192.168.56.165:8080/job/"
 }
+
+variable "branch" {}

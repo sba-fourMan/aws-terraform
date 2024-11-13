@@ -13,7 +13,7 @@ resource "aws_lambda_function" "dev-auction-service" {
 
   environment {
     variables = {
-      JENKINS_URL = "${var.JENKINS_URL}/dev-auction-service/build?token=auction"
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-auction-service/build?token=auction"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
@@ -35,7 +35,7 @@ resource "aws_lambda_function" "dev-apiGateway" {
 
   environment {
     variables = {
-      JENKINS_URL = "${var.JENKINS_URL}/dev-apiGateway/build?token=apiGateway"
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-apiGateway/build?token=apiGateway"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
@@ -57,7 +57,7 @@ resource "aws_lambda_function" "dev-cert" {
 
   environment {
     variables = {
-      JENKINS_URL = "${var.JENKINS_URL}/dev-cert/build?token=cert"
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-cert/build?token=cert"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
@@ -79,7 +79,7 @@ resource "aws_lambda_function" "dev-config" {
 
   environment {
     variables = {
-      JENKINS_URL = "${var.JENKINS_URL}/dev-config/build?token=config"
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-config/build?token=config"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
@@ -101,7 +101,7 @@ resource "aws_lambda_function" "dev-receipt" {
 
   environment {
     variables = {
-      JENKINS_URL = "${var.JENKINS_URL}/dev-receipt/build?token=receipt"
+      JENKINS_URL = "${var.JENKINS_URL}${var.branch}-receipt/build?token=receipt"
       JENKINS_TOKEN = var.JENKINS_TOKEN
       JENKINS_USER = var.JENKINS_USER
     }
