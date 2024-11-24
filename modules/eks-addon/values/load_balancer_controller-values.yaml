@@ -1,0 +1,19 @@
+clusterName: "${cluster_name}"
+
+region: "${region}"
+
+vpcID: "${vpc_id}"
+
+serviceAccount:
+  create: false
+  name: "${service_account_name}"
+
+hostNetwork: true
+
+dnsPolicy: ClusterFirstWithHostNet
+
+webhookService:
+  port: 443
+  targetPort: 9443
+
+replicaCount: 2

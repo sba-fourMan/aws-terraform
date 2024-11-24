@@ -1,0 +1,51 @@
+server:
+  serviceAccount: 
+    name: ${service_account_name}
+    create: false
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+  service:
+    type: ClusterIP
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node
+              operator: In
+              values:
+                - argocd
+
+repoServer:
+  serviceAccount: 
+    name: ${service_account_name}
+    create: false
+  replicas: 1
+  service:
+    type: ClusterIP
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node
+              operator: In
+              values:
+                - argocd
+
+controller:
+  replicas: 1
+  service:
+    type: ClusterIP
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node
+              operator: In
+              values:
+                - argocd
+
+configs:
+  secret:
+    admin:
+      password: "${password}"

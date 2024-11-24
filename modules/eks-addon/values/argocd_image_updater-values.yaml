@@ -1,0 +1,22 @@
+argocd:
+  server: argocd-server
+  namespace: "${namespace}"
+
+replicaCount: 2
+serviceAccount: 
+  name: ${service_account_name}
+  create: false
+serviceType: ClusterIP
+
+log:
+  level: info
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: node
+              operator: In
+              values:
+                - argocd

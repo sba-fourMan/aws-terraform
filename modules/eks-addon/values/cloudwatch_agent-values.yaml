@@ -1,0 +1,16 @@
+clusterName: "${cluster_name}"
+awsRegion: "${region}"
+
+logs:
+  enabled: true
+
+metrics:
+  enabled: false
+
+serviceAccount:
+  create: false
+  name: "${service_account_name}"
+
+configmap: "${configmap}"
+
+replicaCount: 2

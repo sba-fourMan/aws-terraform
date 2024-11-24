@@ -1,0 +1,14 @@
+autoDiscovery:
+  clusterName: "${cluster_name}"
+  tags:
+    - k8s.io/cluster-autoscaler/enabled=true
+    - k8s.io/cluster-autoscaler/${cluster_name}=true
+
+awsRegion: "${region}"
+
+rbac:
+  serviceAccount:
+    name: "${service_account_name}"
+  create: true
+
+replicaCount: 2

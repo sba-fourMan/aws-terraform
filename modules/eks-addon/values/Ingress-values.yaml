@@ -1,0 +1,20 @@
+controller:
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Cluster
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-type: "external"
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+      service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-040e9dda97d107557,subnet-08ace0d31fe26fe18"
+      service.beta.kubernetes.io/aws-load-balancer-security-groups: "${ingress_sg}"
+  admissionWebhooks:
+    enabled: true
+  replicaCount: 2
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
