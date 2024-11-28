@@ -159,7 +159,9 @@ resource "aws_iam_role" "external_secrets_role" {
 
 resource "aws_iam_policy" "secrets_manager_policy" {
   name = "secrets-manager-policy"
-  policy = file("${path.module}/json/external-secrets.json")
+  policy = templatefile("${path.module}/json/external-secrets.json", {
+    region = var.region
+  })
 }
 
 

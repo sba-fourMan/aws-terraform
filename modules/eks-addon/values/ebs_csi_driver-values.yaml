@@ -14,4 +14,5 @@ storageClasses:
     volumeBindingMode: WaitForFirstConsumer
     reclaimPolicy: Delete
     parameters:
-      type
+      type: gp3
+      encrypted: "true"

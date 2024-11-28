@@ -19,7 +19,12 @@ resource "kubernetes_service_account" "autoscaler" {
   metadata {
     name = "cluster-autoscaler"
     namespace = "kube-system"
+    labels = {
+      "app.kubernetes.io/managed-by" = "Helm"
+    }
     annotations = {
+      "meta.helm.sh/release-name" = "cluster-autoscaler"
+      "meta.helm.sh/release-namespace" = "kube-system"
       "eks.amazonaws.com/role-arn" = var.autoscaler_role.arn
     }
   }
@@ -180,9 +185,9 @@ resource "kubernetes_service_account" "cloudwatch_agent_sa" {
 
 # Cloudwatch Logs
 resource "helm_release" "cloudwatch_agent" {
-  name       = "cloudwatch-agent"
-  chart      = "cloudwatch-agent"
-  repository = "https://amazon-eks.s3.us-west-2.amazonaws.com/cloudwatch-agent-helm-chart"
+  name       = "aws-cloudwatch-metrics"
+  chart      = "aws-cloudwatch-metrics"
+  repository = "https://aws.github.io/eks-charts"
   namespace  = "kube-system"
   values = [
     templatefile("${path.module}/values/cloudwatch_agent-values.yaml", {
@@ -266,7 +271,7 @@ resource "helm_release" "external_secrets" {
     templatefile("${path.module}/values/external_secrets-values.yaml", {
       namespace = kubernetes_namespace.argocd.metadata[0].name
       region = var.region
-      service_account_name = kubernetes_service_account.metadata[0].name
+      service_account_name = kubernetes_service_account.external_secrets_sa.metadata[0].name
     })
   ]
 }
@@ -276,8 +281,9 @@ resource "kubernetes_manifest" "secret_store" {
   manifest = yamldecode(templatefile("${path.module}/manifest/secret_store.yaml", {
     region = var.region
     service_account_name = kubernetes_service_account.external_secrets_sa.metadata[0].name
-    namespace = kubernetes_namespace.argocd.metadata[0].name
   }))
+
+  depends_on = [ helm_release.external_secrets ]
 }
 
 # EBS CSI Driver 서비스 계정 생성
