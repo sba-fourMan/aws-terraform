@@ -6,7 +6,7 @@ server:
     enabled: true
     minReplicas: 2
   service:
-    type: LoadBalancer
+    type: ClusterIP
     annotations:
       service.beta.kubernetes.io/aws-load-balancer-type: "external"
       service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/"
